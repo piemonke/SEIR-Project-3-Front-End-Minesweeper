@@ -1,5 +1,6 @@
 import './App.css';
 import React, { useState, useEffect } from "react";
+import axios from "axios";
 
 import Board from "./components/Board/Board";
 
@@ -33,8 +34,8 @@ function App() {
         coord: {x: col, y: row},
         mine: false,
         nearby: 0,
-        ...tileDefault,
-        disabled: false,
+        // ...tileDefault,
+        // disabled: false,
       });
       if(col < rowLength - 1) {
         col++;
@@ -90,10 +91,7 @@ function App() {
     return tiles;
   }
   
-  useEffect(() => {
-    setTiles(generateBoardData());
-  }, []);
-  // let tiles = generateBoardData();
+  
 
   //function to send board data
   //only call at first render or at new board creation
@@ -110,6 +108,13 @@ function App() {
 
   const [tiles, setTiles] = useState([]);
 
+  useEffect(() => {
+    let tilesData = generateBoardData();
+    //send data to backend API
+    
+    setTiles(tilesData);
+  }, [/*set rules to generate data */]);
+
   function handleTileSelect(e, tileIdx) {
     e.preventDefault();
     let newTiles = tiles.map(tile => tile.tIndex === tileIdx ? {...tile, disabled: true} : tile);
@@ -124,7 +129,7 @@ function App() {
     {/* <button onClick={() => tiles = generateBoardData()}>gen board</button> */}
 
 
-    <Board tiles={tiles} event={handleTileSelect}/>
+    <Board tiles={tiles} tileDetails={tileDefault} event={handleTileSelect}/>
   </div>
   );
 }

@@ -9,8 +9,8 @@ const Board = (props) => {
                     i={tile.tIndex} 
                     x={tile.coord.x} 
                     y={tile.coord.y} 
-                    variant={tile.variant}
-                    color={tile.color}
+                    variant={props.tileDetails.variant}
+                    color={props.tileDetails.color}
                     mine={tile.mine}
                     nearby={tile.nearby}
                     disabled={tile.disabled}
