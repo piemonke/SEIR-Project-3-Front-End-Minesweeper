@@ -3,6 +3,7 @@ import React, { useState, useEffect } from "react";
 import axios from "axios";
 
 import Board from "./components/Board/Board";
+import ToggleFlag from "./components/ToggleFlag/ToggleFlag";
 
 function App() {
 
@@ -107,12 +108,15 @@ function App() {
 
 
   const [tiles, setTiles] = useState([]);
+  const [toggleFlag, setToggleFlag] = useState();
 
   useEffect(() => {
     let tilesData = generateBoardData();
+    console.log(tilesData);
     //send data to backend API
     
     setTiles(tilesData);
+    setToggleFlag(false);
   }, [/*set rules to generate data */]);
 
   function handleTileSelect(e, tileIdx) {
@@ -121,6 +125,16 @@ function App() {
     setTiles(newTiles);
   }
 
+  function handleTileFlag(e, tileIdx) {
+    e.preventDefault();
+    let newTiles = tiles.map(tile => tile.tIndex === tileIdx ? {...tile, flag: !tile.flag} : tile);
+    setTiles(newTiles);
+  }
+
+  function updateToggleFlag(e) {
+    e.preventDefault();
+    setToggleFlag(!toggleFlag);
+  }
 
   return (
     <div className="App">
@@ -128,8 +142,8 @@ function App() {
     <p>Placeholder stuff for rules, difficulty selector, maybe top ten fastest times</p>
     {/* <button onClick={() => tiles = generateBoardData()}>gen board</button> */}
 
-
-    <Board tiles={tiles} tileDetails={tileDefault} event={handleTileSelect}/>
+    <ToggleFlag toggleFlag={toggleFlag} event={updateToggleFlag}/>
+    <Board tiles={tiles} tileDetails={tileDefault} event={toggleFlag ? handleTileFlag : handleTileSelect}/>
   </div>
   );
 }

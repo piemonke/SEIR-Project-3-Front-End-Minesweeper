@@ -15,6 +15,7 @@ const Board = (props) => {
                     nearby={tile.nearby}
                     disabled={tile.disabled}
                     event={props.event}
+                    flag={tile.flag}
                     />
             )}
         </div>
