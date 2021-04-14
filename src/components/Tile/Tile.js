@@ -8,11 +8,14 @@ const Tile = (props) => {
                 color={props.mine ? "secondary" : props.color}
                 disabled={props.disabled}
                 onClick={(e) => {
-                    e.preventDefault();
-                    console.log(e.getModifierState());
-                    console.log(e);
-                    console.log(props.i);
-                    props.event(e, props.i);
+                    if(!props.flag) {
+                        e.preventDefault();
+                        props.event(e, props.i);
+                    } else {
+                        if(props.toggleFlag) {
+                            props.event(e, props.i);
+                        }
+                    }
                     }
                 }
             >{props.mine ? "m" : props.nearby ? `${props.nearby}` : "c"}</Button>

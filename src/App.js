@@ -112,21 +112,28 @@ function App() {
 
   useEffect(() => {
     let tilesData = generateBoardData();
-    console.log(tilesData);
+    console.log();
     //send data to backend API
-    
+    fetch("localhost:3001/api/board/create", 
+      {method: "POST", 
+      headers: {"Content-type": "Application/json"},
+      body: JSON.stringify(tilesData)})
     setTiles(tilesData);
     setToggleFlag(false);
   }, [/*set rules to generate data */]);
 
   function handleTileSelect(e, tileIdx) {
     e.preventDefault();
+    //change to send data(Index and Coordinates of selected tile) to backend
+
+    //recieve array of indexes to disable
     let newTiles = tiles.map(tile => tile.tIndex === tileIdx ? {...tile, disabled: true} : tile);
     setTiles(newTiles);
   }
 
   function handleTileFlag(e, tileIdx) {
     e.preventDefault();
+    //change behavior of tiles to not be interactive unless for removing flag
     let newTiles = tiles.map(tile => tile.tIndex === tileIdx ? {...tile, flag: !tile.flag} : tile);
     setTiles(newTiles);
   }
@@ -143,7 +150,10 @@ function App() {
     {/* <button onClick={() => tiles = generateBoardData()}>gen board</button> */}
 
     <ToggleFlag toggleFlag={toggleFlag} event={updateToggleFlag}/>
-    <Board tiles={tiles} tileDetails={tileDefault} event={toggleFlag ? handleTileFlag : handleTileSelect}/>
+    <Board tiles={tiles} 
+      tileDetails={tileDefault} 
+      event={toggleFlag ? handleTileFlag : handleTileSelect}
+      toggleFlag={toggleFlag}/>
   </div>
   );
 }

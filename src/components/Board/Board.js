@@ -16,6 +16,7 @@ const Board = (props) => {
                     disabled={tile.disabled}
                     event={props.event}
                     flag={tile.flag}
+                    toggleFlag={props.toggleFlag}
                     />
             )}
         </div>
