@@ -112,12 +112,12 @@ function App() {
 
   useEffect(() => {
     let tilesData = generateBoardData();
-    console.log();
+    console.log(tilesData);
     //send data to backend API
-    fetch("localhost:3001/api/board/create", 
-      {method: "POST", 
-      headers: {"Content-type": "Application/json"},
-      body: JSON.stringify(tilesData)})
+    // fetch("http://localhost:3001/api/board/create", 
+    //   {method: "POST", 
+    //   headers: {"Content-type": "Application/json"},
+    //   body: JSON.stringify(tilesData)})
     setTiles(tilesData);
     setToggleFlag(false);
   }, [/*set rules to generate data */]);
