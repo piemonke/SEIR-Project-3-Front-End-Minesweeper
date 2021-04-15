@@ -10,7 +10,7 @@ const Tile = (props) => {
                 onClick={(e) => {
                     if(!props.flag) {
                         e.preventDefault();
-                        props.event(e, props.i);
+                        props.event(e, props.i, props.board);
                     } else {
                         if(props.toggleFlag) {
                             props.event(e, props.i);

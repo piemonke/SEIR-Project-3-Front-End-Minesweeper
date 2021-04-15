@@ -94,15 +94,6 @@ function App() {
   
   
 
-  
-
-  //function to send tile data
-  //called on clicking button
-  //sends tile Index and coordinates to server
-  //server returns json data of all tile IDs to reveal
-  //function updates state of those tiles
-
-
   const [tiles, setTiles] = useState([]);
   const [toggleFlag, setToggleFlag] = useState();
   const [boardId, setBoardId] = useState();
@@ -129,13 +120,22 @@ function App() {
     setToggleFlag(false);
   }, [/*set rules to generate data */]);
 
-  async function handleTileSelect(e, tileIdx) {
+  //function to send tile data
+  //called on clicking button
+  //sends tile Index and coordinates to server
+  //server returns json data of all tile IDs to reveal
+  //function updates state of those tiles
+  async function handleTileSelect(e, tileIdx, boardId) {
     e.preventDefault();
     //change to send data(Index and Coordinates of selected tile) to backend
-
+    let indexes = await fetch("http://localhost:3001/api/board/tile",
+      {method: "Post",
+      headers: {"Content-type": "Application/json"},
+      body: JSON.stringify({ id: boardId, tile: tileIdx })})
+      .then(res => res.json());
     //recieve array of indexes to disable
-    let newTiles = tiles.map(tile => tile.tIndex === tileIdx ? {...tile, disabled: true} : tile);
-    setTiles(newTiles);
+    // let newTiles = tiles.map(tile => tile.tIndex === tileIdx ? {...tile, disabled: true} : tile);
+    // setTiles(newTiles);
   }
 
   function handleTileFlag(e, tileIdx) {
