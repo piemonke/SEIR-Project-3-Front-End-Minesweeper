@@ -1,11 +1,15 @@
 import './App.css';
 import React, { useState, useEffect } from "react";
-import axios from "axios";
+import dotenv from "dotenv";
+
 
 import Board from "./components/Board/Board";
 import ToggleFlag from "./components/ToggleFlag/ToggleFlag";
 
 function App() {
+  dotenv.config();
+
+  const backEndURI = process.env.BACKEND_URI;
 
   const tileDefault = {
     variant: "contained",
@@ -106,7 +110,7 @@ function App() {
     //sends board data to back end
     //back end returns board database ID
     async function sendBoardData() {
-      const boardUid = await fetch("http://localhost:3001/api/board/create", 
+      const boardUid = await fetch(`${backEndURI}/api/board/create`, 
         {method: "POST", 
         headers: {"Content-type": "Application/json"},
         body: JSON.stringify({tiles: tilesData})})
@@ -128,14 +132,18 @@ function App() {
   async function handleTileSelect(e, tileIdx, boardId) {
     e.preventDefault();
     //change to send data(Index and Coordinates of selected tile) to backend
-    let indexes = await fetch("http://localhost:3001/api/board/tile",
+    let indexes = await fetch(`${backEndURI}/api/board/tile`,
       {method: "Post",
       headers: {"Content-type": "Application/json"},
       body: JSON.stringify({ id: boardId, tile: tileIdx })})
       .then(res => res.json());
+    // console.log(indexes);
     //recieve array of indexes to disable
-    // let newTiles = tiles.map(tile => tile.tIndex === tileIdx ? {...tile, disabled: true} : tile);
-    // setTiles(newTiles);
+
+    //lose condition
+
+    let newTiles = tiles.map(tile => indexes.tiles.includes(tile.tIndex) ? {...tile, disabled: true} : tile);
+    setTiles(newTiles);
   }
 
   function handleTileFlag(e, tileIdx) {
