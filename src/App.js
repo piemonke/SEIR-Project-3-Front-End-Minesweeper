@@ -113,6 +113,7 @@ function App() {
     async function sendBoardData() {
       const boardUid = await fetch(`https://flubbsweeper-back-end.herokuapp.com/api/board/create`, 
         {method: "POST", 
+        mode: "cors",
         headers: {"Content-type": "Application/json"},
         body: JSON.stringify({tiles: tilesData})})
         .then(res => res.json());
@@ -135,6 +136,7 @@ function App() {
     //change to send data(Index and Coordinates of selected tile) to backend
     let indexes = await fetch(`https://flubbsweeper-back-end.herokuapp.com/api/board/tile`,
       {method: "Post",
+      mode: "cors",
       headers: {"Content-type": "Application/json"},
       body: JSON.stringify({ id: boardId, tile: tileIdx })})
       .then(res => res.json());
