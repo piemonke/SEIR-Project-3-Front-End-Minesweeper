@@ -111,7 +111,7 @@ function App() {
     //sends board data to back end
     //back end returns board database ID
     async function sendBoardData() {
-      const boardUid = await fetch(`https://flubbsweeper-back-end.herokuapp.com//api/board/create`, 
+      const boardUid = await fetch(`https://flubbsweeper-back-end.herokuapp.com/api/board/create`, 
         {method: "POST", 
         headers: {"Content-type": "Application/json"},
         body: JSON.stringify({tiles: tilesData})})
@@ -133,7 +133,7 @@ function App() {
   async function handleTileSelect(e, tileIdx, boardId) {
     e.preventDefault();
     //change to send data(Index and Coordinates of selected tile) to backend
-    let indexes = await fetch(`https://flubbsweeper-back-end.herokuapp.com//api/board/tile`,
+    let indexes = await fetch(`https://flubbsweeper-back-end.herokuapp.com/api/board/tile`,
       {method: "Post",
       headers: {"Content-type": "Application/json"},
       body: JSON.stringify({ id: boardId, tile: tileIdx })})
