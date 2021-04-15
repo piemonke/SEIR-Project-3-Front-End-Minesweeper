@@ -94,11 +94,7 @@ function App() {
   
   
 
-  //function to send board data
-  //only call at first render or at new board creation
-  //sends board data to back end
-  //back end returns board database ID
-
+  
 
   //function to send tile data
   //called on clicking button
@@ -109,20 +105,31 @@ function App() {
 
   const [tiles, setTiles] = useState([]);
   const [toggleFlag, setToggleFlag] = useState();
+  const [boardId, setBoardId] = useState();
 
   useEffect(() => {
     let tilesData = generateBoardData();
-    console.log(tilesData);
     //send data to backend API
-    // fetch("http://localhost:3001/api/board/create", 
-    //   {method: "POST", 
-    //   headers: {"Content-type": "Application/json"},
-    //   body: JSON.stringify(tilesData)})
+    //function to send board data
+    //only call at first render or at new board creation
+    //sends board data to back end
+    //back end returns board database ID
+    async function sendBoardData() {
+      const boardUid = await fetch("http://localhost:3001/api/board/create", 
+        {method: "POST", 
+        headers: {"Content-type": "Application/json"},
+        body: JSON.stringify({tiles: tilesData})})
+        .then(res => res.json());
+      setBoardId(boardUid);
+    }
+
+    sendBoardData();
+    
     setTiles(tilesData);
     setToggleFlag(false);
   }, [/*set rules to generate data */]);
 
-  function handleTileSelect(e, tileIdx) {
+  async function handleTileSelect(e, tileIdx) {
     e.preventDefault();
     //change to send data(Index and Coordinates of selected tile) to backend
 
@@ -150,7 +157,8 @@ function App() {
     {/* <button onClick={() => tiles = generateBoardData()}>gen board</button> */}
 
     <ToggleFlag toggleFlag={toggleFlag} event={updateToggleFlag}/>
-    <Board tiles={tiles} 
+    <Board tiles={tiles}
+      board={boardId} 
       tileDetails={tileDefault} 
       event={toggleFlag ? handleTileFlag : handleTileSelect}
       toggleFlag={toggleFlag}/>
