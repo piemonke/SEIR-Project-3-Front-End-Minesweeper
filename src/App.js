@@ -16,6 +16,15 @@ function App() {
     variant: "contained",
     color: "primary",
   }
+  
+
+  //include in state later to make these modifiable
+  //total number of tiles and bombs, make variable based off difficulty later
+  const tileTotal = 100;
+  const bombNum = 10;
+  
+  //number of columns per row, make variable based off difficulty later
+  const rowLength = 10;
 
   const generateBoardData = () => {
     //array for storing tiles and their data
@@ -23,12 +32,6 @@ function App() {
     //possible unnecessary variable
     // const bombIndex = [];
     
-    //total number of tiles and bombs, make variable based off difficulty later
-    const tileTotal = 100;
-    const bombNum = 10;
-    
-    //number of columns per row, make variable based off difficulty later
-    const rowLength = 10;
     
     //fill array of Tiles
     //Tiles have tile index, x coordinate, y coordinate
@@ -102,6 +105,7 @@ function App() {
   const [tiles, setTiles] = useState([]);
   const [toggleFlag, setToggleFlag] = useState();
   const [boardId, setBoardId] = useState();
+  const [flagged, setFlagged] = useState([]);
 
   useEffect(() => {
     let tilesData = generateBoardData();
@@ -121,8 +125,29 @@ function App() {
     }
 
     sendBoardData();
+
+    //create new array of tiles with no props for mined
+    let tilesRender = [];
+    let row = 0;
+    let col = 0;
+    for(let i = 0; i < tileTotal; i++) {
+      tilesRender.push({
+        tIndex: i,
+        coord: {x: col, y: row},
+        mine: false,
+        nearby: 0,
+        // ...tileDefault,
+        // disabled: false,
+      });
+      if(col < rowLength - 1) {
+        col++;
+      } else {
+        col = 0;
+        row++;
+      }
+    }
     
-    setTiles(tilesData);
+    setTiles(tilesRender);
     setToggleFlag(false);
   }, [/*set rules to generate data */]);
 
@@ -152,6 +177,17 @@ function App() {
   function handleTileFlag(e, tileIdx) {
     e.preventDefault();
     //change behavior of tiles to not be interactive unless for removing flag
+    //win condition
+    //if all and only mined tiles are flagged, declare victory
+    //store all flagged tiles in array, check array against backend
+    
+    //if tileIdx exists in flagged, meaning that the tile has been flagged, remove it and toggle it off
+    if(flagged.includes(tileIdx)){
+      flagged.splice(flagged.indexOf(tileIdx), 1);
+    } else {
+      //else add tileIdx to flagged array
+      flagged.push(tileIdx);
+    }
     let newTiles = tiles.map(tile => tile.tIndex === tileIdx ? {...tile, flag: !tile.flag} : tile);
     setTiles(newTiles);
   }
