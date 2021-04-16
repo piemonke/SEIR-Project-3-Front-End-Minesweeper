@@ -165,7 +165,7 @@ function App() {
       headers: {"Content-type": "Application/json"},
       body: JSON.stringify({ id: boardId, tile: tileIdx })})
       .then(res => res.json());
-    // console.log(indexes);
+    console.log(indexes);
     //recieve array of indexes to disable
 
     //lose condition
