@@ -18,7 +18,7 @@ const Tile = (props) => {
                     }
                     }
                 }
-            >{props.mine ? "m" : props.nearby ? `${props.nearby}` : "c"}</Button>
+            >{props.mine ? "m" : props.nearby ? `${props.nearby}` : "0"}</Button>
         </div>
     );
 }

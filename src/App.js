@@ -165,7 +165,7 @@ function App() {
       headers: {"Content-type": "Application/json"},
       body: JSON.stringify({ id: boardId, tile: tileIdx })})
       .then(res => res.json());
-    console.log(indexes);
+    // console.log(indexes);
     //recieve array of indexes to disable
 
     //lose condition
@@ -203,10 +203,12 @@ function App() {
   return (
     <div className="App">
     <p>WARNING! This app is still an extreme work in progress. It is missing a million and a half features and what is currently here in production is only to show functionality.</p>
-    <p>Missing features include:</p>
+    <p>The most Extreme missing features include:</p>
     <ul>
+      <li>Not showing tile data on front end</li>
       <li>Functional Win condition</li>
       <li>Functional Lose condition</li>
+      <li>Difficulty selector</li>
     </ul>
     {/* <button onClick={() => tiles = generateBoardData()}>gen board</button> */}
 
