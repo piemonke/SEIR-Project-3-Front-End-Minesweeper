@@ -191,7 +191,7 @@ function App() {
     //   //else add tileIdx to flagged array
     //   setFlagged(flagged.push(tileIdx));
     // }
-    let newTiles = tiles.map(tile => tile.tIndex === tileIdx ? {...tile, flag: !tile.flag} : tile);
+    let newTiles = tiles.map(tile => (tile.tIndex === tileIdx && !(tile.flag === true))? {...tile, flag: !tile.flag} : tile);
     setTiles(newTiles);
   }
 
