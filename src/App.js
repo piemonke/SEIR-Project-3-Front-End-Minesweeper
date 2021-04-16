@@ -127,27 +127,27 @@ function App() {
     sendBoardData();
 
     //create new array of tiles with no props for mined
-    let tilesRender = [];
-    let row = 0;
-    let col = 0;
-    for(let i = 0; i < tileTotal; i++) {
-      tilesRender.push({
-        tIndex: i,
-        coord: {x: col, y: row},
-        mine: false,
-        nearby: 0,
-        // ...tileDefault,
-        // disabled: false,
-      });
-      if(col < rowLength - 1) {
-        col++;
-      } else {
-        col = 0;
-        row++;
-      }
-    }
+    // let tilesRender = [];
+    // let row = 0;
+    // let col = 0;
+    // for(let i = 0; i < tileTotal; i++) {
+    //   tilesRender.push({
+    //     tIndex: i,
+    //     coord: {x: col, y: row},
+    //     mine: false,
+    //     nearby: 0,
+    //     // ...tileDefault,
+    //     // disabled: false,
+    //   });
+    //   if(col < rowLength - 1) {
+    //     col++;
+    //   } else {
+    //     col = 0;
+    //     row++;
+    //   }
+    // }
     
-    setTiles(tilesRender);
+    setTiles(tilesData);
     setToggleFlag(false);
   }, [/*set rules to generate data */]);
 
@@ -184,13 +184,13 @@ function App() {
     //store all flagged tiles in array, check array against backend
     
     //if tileIdx exists in flagged, meaning that the tile has been flagged, remove it and toggle it off
-    console.log(flagged);
-    if(flagged.includes(tileIdx)){
-      setFlagged(flagged.splice(flagged.indexOf(tileIdx), 1));
-    } else {
-      //else add tileIdx to flagged array
-      setFlagged(flagged.push(tileIdx));
-    }
+    // console.log(flagged);
+    // if(flagged.includes(tileIdx)){
+    //   setFlagged(flagged.splice(flagged.indexOf(tileIdx), 1));
+    // } else {
+    //   //else add tileIdx to flagged array
+    //   setFlagged(flagged.push(tileIdx));
+    // }
     let newTiles = tiles.map(tile => tile.tIndex === tileIdx ? {...tile, flag: !tile.flag} : tile);
     setTiles(newTiles);
   }
@@ -202,8 +202,12 @@ function App() {
 
   return (
     <div className="App">
-    <p>Lorem, ipsum dolor sit amet consectetur adipisicing elit. Reprehenderit ullam sequi nisi quod iste! Aspernatur voluptatibus animi, suscipit nulla voluptas eveniet optio labore, molestiae velit voluptatem corrupti incidunt in unde!</p>
-    <p>Placeholder stuff for rules, difficulty selector, maybe top ten fastest times</p>
+    <p>WARNING! This app is still an extreme work in progress. It is missing a million and a half features and what is currently here in production is only to show functionality.</p>
+    <p>Missing features include:</p>
+    <ul>
+      <li>Functional Win condition</li>
+      <li>Functional Lose condition</li>
+    </ul>
     {/* <button onClick={() => tiles = generateBoardData()}>gen board</button> */}
 
     <ToggleFlag toggleFlag={toggleFlag} event={updateToggleFlag}/>

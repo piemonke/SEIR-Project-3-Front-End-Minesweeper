@@ -11,8 +11,8 @@ const Board = (props) => {
                     y={tile.coord.y} 
                     variant={props.tileDetails.variant}
                     color={tile.flag ? "secondary" : "primary"}
-                    // mine={tile.mine}
-                    // nearby={tile.nearby}
+                    mine={tile.mine}
+                    nearby={tile.nearby}
                     disabled={tile.disabled}
                     event={props.event}
                     flag={tile.flag}
