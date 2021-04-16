@@ -10,7 +10,7 @@ const Board = (props) => {
                     x={tile.coord.x} 
                     y={tile.coord.y} 
                     variant={props.tileDetails.variant}
-                    color={props.tileDetails.color}
+                    color={tile.flag ? "secondary" : "primary"}
                     // mine={tile.mine}
                     // nearby={tile.nearby}
                     disabled={tile.disabled}

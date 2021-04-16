@@ -5,7 +5,7 @@ const Tile = (props) => {
         <div className="tile">
             <Button 
                 variant={props.variant} 
-                color={props.mine ? "secondary" : props.color}
+                color={props.flag ? "secondary" : "primary"}
                 disabled={props.disabled}
                 onClick={(e) => {
                     if(!props.flag) {
