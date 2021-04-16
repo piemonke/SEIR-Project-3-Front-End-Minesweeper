@@ -165,14 +165,14 @@ function App() {
       headers: {"Content-type": "Application/json"},
       body: JSON.stringify({ id: boardId, tile: tileIdx })})
       .then(res => res.json());
-    console.log(indexes);
+    // console.log(indexes);
     //recieve array of indexes to disable
 
     //lose condition
     //if indexes array is empty
     //trigger lose
 
-    let newTiles = tiles.map(tile => indexes.tiles.includes(tile.tIndex) ? {...tile, disabled: true} : tile);
+    let newTiles = tiles.map(tile => (indexes.tiles.includes(tile.tIndex)  && !(tile.flag === true)) ? {...tile, disabled: true} : tile);
     setTiles(newTiles);
   }
 
@@ -191,7 +191,7 @@ function App() {
     //   //else add tileIdx to flagged array
     //   setFlagged(flagged.push(tileIdx));
     // }
-    let newTiles = tiles.map(tile => (tile.tIndex === tileIdx && !(tile.flag === true))? {...tile, flag: !tile.flag} : tile);
+    let newTiles = tiles.map(tile => tile.tIndex === tileIdx ? {...tile, flag: !tile.flag} : tile);
     setTiles(newTiles);
   }
 
